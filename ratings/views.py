@@ -6,7 +6,7 @@ from . models import Passenger, Driver
 	Home page
 	- Links for all features
 """
-def home():
+def home( request ):
 	return render( request, 'ratings/home.html' )
 
 """
