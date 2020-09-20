@@ -1,0 +1,6 @@
+asgiref==3.2.7
+Django==3.0.6
+future==0.18.2
+Pillow==6.2.0
+pytz==2020.1
+virtualenv==16.7.5
