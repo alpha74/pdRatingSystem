@@ -1,0 +1,40 @@
+<!-- extends base.html -->
+
+
+{% extends 'ratings/base.html' %}	
+{% block content %}
+	
+	<hr>
+	<div>
+		<h3> Give Rating to </h3>
+		<ul>
+			<li> 
+				<a href = "{% url 'rate_passenger' %}"> Passenger </a>
+			</li>
+			<li>
+				<a href = "{% url 'rate_driver' %}"> Driver </a>
+			</li>
+		</ul>
+	</div>
+	
+	<div>
+		<h3> View Rating of </h3>
+		<ul>
+			<form action="{% url 'view_rating_driver' %}" method = "GET">
+				<input type="text" name = "name"></input>
+				<input type="submit" value="View Driver">
+			</form>
+
+			</br></br>
+			
+			
+			<form action="{% url 'view_rating_passenger' %}" method = "GET">
+				<input type="text" name = "name"></input>
+				<input type="submit" value="View Passenger">
+			</form>
+		</ul>
+	</div>
+	<hr>
+
+{% endblock content %}
+
