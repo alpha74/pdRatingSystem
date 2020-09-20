@@ -1,6 +1,14 @@
 from django.shortcuts import render, get_object_or_404
 from . models import Passenger, Driver
 
+
+"""
+	Home page
+	- Links for all features
+"""
+def home():
+	return render( request, 'ratings/home.html' )
+
 """
 	Rate the driver
 	- Passenger can rate the driver
@@ -95,9 +103,8 @@ def rating_driver( request ):
 						"rating" : driver.rating
 						}
 			
-		
 			return Response( context, status = status.HTTP_200_OK )
 		
-		except Exceptio as e:
+		except Exception as e:
 			return Response( status=status.HTTP_500_INTERNAL_SERVER_ERROR )			
 
