@@ -112,6 +112,6 @@ def rating_driver( request ):
 			return render( request, 'ratings/view_ratings.html', context )
 		
 		except Exception as e:
-			print( "ERROR: " + str(e) )
+			
 			return HttpResponse( status=500 )
 
