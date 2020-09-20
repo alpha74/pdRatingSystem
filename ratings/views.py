@@ -1,4 +1,6 @@
 from django.shortcuts import render, get_object_or_404
+from django.http import HttpResponse
+
 from . models import Passenger, Driver
 
 
@@ -29,11 +31,11 @@ def rate_driver( request ):
 			driver.trips = driver.trips + 1
 			driver.rating = ( driver.rating  + new_rating ) / 2
 			
-			return Response( status=status.HTTP_200_OK )
+			return HttpResponse( status=status.HTTP_200_OK )
 			
 			
 		except Exception as e:
-			return Response( status=status.HTTP_500_INTERNAL_SERVER_ERROR )
+			return HttpResponse( status=500 )
 
 """
 	Rate the passenger
@@ -54,10 +56,10 @@ def rate_passenger( request ):
 			# Update passenger's rating
 			passenger.rating = ( passenger.rating + new_rating ) /2 
 		
-			return Response( status=status.HTTP_200_OK )
+			return HttpResponse( status=200 )
 
 		except Exception as e:
-			return Response( status=status.HTTP_500_INTERNAL_SERVER_ERROR )
+			return HttpResponse( status=status.HTTP_500_INTERNAL_SERVER_ERROR )
 
 
 """
@@ -69,20 +71,22 @@ def rating_passenger( request ):
 	if( request.method == "GET" ):
 		try:
 			payload = request.GET
-			passenger_name = payload[ "passenger_name" ]
+			passenger_name = payload[ "name" ]
 			
 			# Get passenger's name
 			passenger = get_object_or_404( Passenger, name = passenger_name )
 			
 			context = {
+						"category" : "Passenger",
+						"name" : passenger_name,
 						"rating" : passenger.rating
 						}
 			
 		
-			return Response( context, status = status.HTTP_200_OK )
+			return render( request, 'ratings/view_ratings.html', context )
 		
 		except Exception as e:
-			return Response( status=status.HTTP_500_INTERNAL_SERVER_ERROR )
+			return HttpResponse( status=500 )
 
 
 """
@@ -94,17 +98,20 @@ def rating_driver( request ):
 	if( request.method == "GET" ):
 		try:
 			payload = request.GET
-			driver_name = payload[ "driver_name" ]
+			driver_name = payload[ "name" ]
 			
 			# Get passenger's name
 			driver = get_object_or_404( Driver, name = driver_name )
 			
 			context = {
-						"rating" : driver.rating
+						"category" : "Driver",
+						"name" : driver_name,
+						"rating" : driver.rating,
 						}
 			
-			return Response( context, status = status.HTTP_200_OK )
+			return render( request, 'ratings/view_ratings.html', context )
 		
 		except Exception as e:
-			return Response( status=status.HTTP_500_INTERNAL_SERVER_ERROR )			
+			print( "ERROR: " + str(e) )
+			return HttpResponse( status=500 )
 
