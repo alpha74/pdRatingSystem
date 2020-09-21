@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 
 from . models import Passenger, Driver
@@ -21,8 +21,8 @@ def rate_driver( request ):
 	if( request.method == "POST" ):
 		try:
 			payload = request.POST
-			driver_name = payload[ "driver_name" ]
-			new_rating = payload[ "new_rating" ]
+			driver_name = payload[ "name" ]
+			new_rating = float( payload[ "new_rating" ] )
 			
 			# Get driver object
 			driver = get_object_or_404( Driver, name = driver_name )
@@ -30,8 +30,9 @@ def rate_driver( request ):
 			# Update driver's data
 			driver.trips = driver.trips + 1
 			driver.rating = ( driver.rating  + new_rating ) / 2
+			driver.save()
 			
-			return HttpResponse( status=status.HTTP_200_OK )
+			return redirect( home )
 			
 			
 		except Exception as e:
@@ -47,16 +48,17 @@ def rate_passenger( request ):
 	if( request.method == "POST" ):
 		try:
 			payload = request.POST 
-			passenger_name = payload[ "passenger_name" ]
-			new_rating = payload[ "new_rating" ]
+			passenger_name = payload[ "name" ]
+			new_rating = float( payload[ "new_rating" ] )
 			
 			# Get Passenger object
 			passenger = get_object_or_404( Passenger, name = passenger_name )
 	
 			# Update passenger's rating
 			passenger.rating = ( passenger.rating + new_rating ) /2 
+			passenger.save()
 		
-			return HttpResponse( status=200 )
+			return redirect( home )
 
 		except Exception as e:
 			return HttpResponse( status=status.HTTP_500_INTERNAL_SERVER_ERROR )
