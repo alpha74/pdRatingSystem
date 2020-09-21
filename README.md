@@ -38,3 +38,4 @@ Bare HTML is used for demonstration.
 ### Demo object names(for this project):
   - `Driver` : driver1, driver2, driver3, driver4, driver5
   - `Passenger` : pass1, pass2, pass3, pass4, pass5
+  - Initially all have a rating of `3.5`.
