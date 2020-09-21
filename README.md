@@ -29,10 +29,6 @@ Bare HTML is used for demonstration.
     - Rate the passenger
     - View aggregate rating of driver
     - View aggregate rating of passenger
-    
-
-### Features to be added:
-  - HTML templates to give rating.
   
   
 ### Demo object names(for this project):
